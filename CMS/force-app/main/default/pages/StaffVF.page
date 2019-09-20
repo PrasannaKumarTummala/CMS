@@ -1,0 +1,72 @@
+<apex:page standardController="Staff__c" extensions="Staffcontroller" sidebar="false" showHeader="false" title="Staff" >
+    <apex:slds />
+    <style>
+        body {
+        background-image: url("{!$Resource.StaffBG}");
+        background-height:70%;
+        background-size:cover;
+        opacity:0.9;
+        background-attachment: fixed;
+    }
+        </style>
+    <apex:form >
+        <apex:pageBlock title="Search Staff Here!!" rendered="{!flag}">
+           <apex:pageMessages ></apex:pageMessages> 
+            <apex:pageBlockButtons location="bottom">
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enter staff name" ></apex:outputLabel>
+                    <apex:inputText value="{!staffname}" />              
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="Not Mandatory"  >
+                    <apex:outputLabel value="Department"></apex:outputLabel>
+                    <apex:inputText value="{!staffdept}"/>             
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem helpText="Not Mandatory"  >
+                    <apex:outputLabel value="Role"></apex:outputLabel>
+                    <apex:inputText value="{!staffrole}"/>             
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom" >
+                <apex:commandButton styleclass="slds-button slds-button_brand" value=" Search" action="{!search}" /> 
+                <apex:commandButton styleclass="slds-button slds-button_outline-brand" value="New Staff" action="{!newstaff}"  />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        
+        <apex:pageBlock title="Result" rendered="{!flag1}">
+            <apex:pageBlockTable value="{!staff}" var="a">
+                <apex:column value="{!a.name}"/>
+                <apex:column value="{!a.Department__c}"/>
+                <apex:column value="{!a.Role__c}"/> 
+                <apex:column value="{!a.Salary__c}"/> 
+                <apex:column value="{!a.Email__c}" width="20%"/> 
+                <apex:column value="{!a.Gender__c}"/> 
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+         <apex:pageBlock title="Staff Registratioln" rendered="{!flag2}" >
+            <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                <apex:inputField label="Full Name" value="{!Staff__c.Name}" required="true" />
+                <apex:selectList label="Gender" multiselect="false" size="1" value="{!Staff__c.Gender__c}">
+                    <apex:selectOption itemValue="Male" itemLabel="Male"></apex:selectOption>
+                    <apex:selectOption itemValue="Female" itemLabel="Female"></apex:selectOption>
+                </apex:selectList>
+                <apex:inputField label="DOB" value="{!Staff__c.DOB__c}" />
+                <apex:inputField label="Date of Joining" value="{!Staff__c.Date_of_Joining__c}" />
+                <apex:inputfield label="Contact no." value="{!Staff__c.Contact_no__c}"/>
+                
+                <apex:inputfield label="Salary" value="{!Staff__c.Salary__c}"/>
+                <apex:inputField label="Department" value="{!Staff__c.Department__c}" />
+                <apex:inputField label="Role" value="{!Staff__c.Role__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Other Details" collapsible="false">
+                <apex:inputTextarea label="Father's Name" value="{!Staff__c.Father_s_Name__c}" />
+                <apex:inputTextarea label="Pancard No." value="{!Staff__c.Pan_card_number__c}" />
+                <apex:inputTextarea label="Aadhar no." value="{!Staff__c.Aadhar_Number__c}" />
+            </apex:pageBlockSection>
+             <apex:pageBlockButtons >
+                 <apex:commandButton value="Save" action="{!saveme}"/>
+             </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

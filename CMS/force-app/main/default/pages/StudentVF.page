@@ -1,0 +1,233 @@
+<apex:page standardController="Student__c" extensions="StudentController" sidebar="false" showHeader="false" title="Student" applyBodyTag="false">
+     
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"/>
+    <script>
+    function showSpinner()
+    {
+        document.getElementById('opaque').style.display='block';
+        var popUp = document.getElementById('spinner');        
+        popUp.style.display = 'block';
+    } 
+    function highlightRow(row){  
+        $('tr').removeClass('ui-state-active');  
+        $(row).parent().addClass('ui-state-active');  
+    } 
+    </script>
+    
+    <style type="text/css">
+        .ui-state-active{
+        border: 1px solid #fbd850;
+        background: rgb(199,199,199);
+        font-weight: bold;
+        color: #eb8f00;
+        }
+        body {
+        background-image: url("{!$Resource.StudentBG}");
+        background-height:100%;
+        background-size:cover;
+        opacity:0.9;
+        background-attachment: fixed;
+        }
+        .myClass{
+        font-color:red !important;
+        float:left;
+        text-align:center;
+        }
+        #spinner{
+        display: none;
+        width:200px;
+        height: 50px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        text-align:center;
+        padding:10px;
+        font:normal 16px Tahoma, Geneva, sans-serif;
+        margin-left: -100px;
+        margin-top: -100px;
+        z-index:2;
+        overflow: auto;
+        border:1px solid #CCC;
+        background-color:white;
+        z-index:100;
+        padding:5px;
+        line-height:20px;
+        }
+        #opaque {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        display: none;
+        background-color: gray;
+        filter: alpha(opacity=30);
+        opacity: 0.3;
+        -moz-opacity:0.3;
+        -khtml-opacity:0.3
+        }
+        * html #opaque {
+        position: absolute;
+        }
+    </style>
+    <apex:form >
+        <div class="slds-scope">
+            
+<apex:slds ></apex:slds>    
+        <apex:pageMessages />
+        <apex:actionStatus id="pageStatus">
+            <apex:facet name="start">
+                <apex:outputPanel >
+                    <img src="/img/loading32.gif" width="25" height="25" />
+                    <apex:outputLabel value="Loading..."/>
+                </apex:outputPanel>            
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageBlock title="Search Student Here!!" rendered="{!flag}" id="pageblock1" >   
+            
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Enter Student name" ></apex:outputLabel>  
+                    <apex:inputText value="{!stuname}" />
+                </apex:pageBlockSectionItem> <br/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Course Type" ></apex:outputLabel>
+                    <apex:selectList multiselect="false" size="1" value="{!coursetype}" >
+                        <apex:selectOption itemLabel="none"></apex:selectOption>
+                        <apex:selectOption itemValue="B.tech" itemLabel="B.tech"></apex:selectOption>
+                        <apex:selectOption itemValue="M.tech" itemLabel="M.tech"></apex:selectOption>
+                        <apex:selectOption itemValue="MBA" itemLabel="MBA"></apex:selectOption>
+                    </apex:selectList>           
+                </apex:pageBlockSectionItem> <br/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Year of Pursuing"></apex:outputLabel>
+                    <apex:selectList multiselect="false" size="1" value="{!stuyear}">
+                        <apex:selectOption itemLabel="none"></apex:selectOption>
+                        <apex:selectOption itemValue="I" itemLabel="I"></apex:selectOption>
+                        <apex:selectOption itemValue="II" itemLabel="II"></apex:selectOption>
+                        <apex:selectOption itemValue="III" itemLabel="III"></apex:selectOption>
+                        <apex:selectOption itemValue="IV" itemLabel="IV"></apex:selectOption>
+                    </apex:selectList>                   
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>            
+            <apex:pageBlockButtons location="bottom">                  
+                <apex:commandButton title="Search"  styleclass="slds-button slds-button_brand" value="Search" action="{!search}" onclick="showSpinner()" status="pageStatus" />                    
+                <apex:commandButton title="Clear"  styleclass="slds-button slds-button_destructive" value="Clear results" action="{!clearresult}" onclick="showSpinner()" status="pageStatus" />                     
+                <apex:commandButton title="New Student"  styleclass="slds-button slds-button_outline-brand" value="New Student" action="{!newstudent}" onclick="showSpinner()" status="pageStatus"/>                 
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title="Result" rendered="{!flag1}" id="pageblock2">
+            <apex:pageBlockTable value="{!student}" var="a">
+                <apex:column value="{!a.Student_ID__c}"/>
+                <apex:column value="{!a.name}"/>
+                <apex:column value="{!a.Course_Type__c}"/> 
+                <apex:column value="{!a.Branch__c}"/> 
+                <apex:column value="{!a.Pursuing_Year__c}"/> 
+                <apex:column value="{!a.Email__c}"/> 
+                <apex:column value="{!a.Status__c}"/>
+                <apex:column value="{!a.Semester__c}"/>
+                <apex:column value="{!a.Mobile_no__c}" headerValue="Student's"/>
+                <apex:column headerValue="Detail's" onclick="highlightRow(this)">
+                    <apex:commandLink action="{!studentdetails}" value="Full details" >
+                        <apex:param value="{!a.id}" assignTo="{!sid}" name="student id"/>
+                        <apex:param value="{!a.name}" assignTo="{!sname}" name="student name"/>                       
+                    </apex:commandLink>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+        <apex:pageBlock title="Student Registration Form" rendered="{!flag2}" id="pageblock3">
+            <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                <apex:inputField label="Full Name" value="{!Student__c.Name}"  />
+                <apex:selectList label="Gender" multiselect="false" size="1" value="{!Student__c.Gender__c}">
+                    <apex:selectOption itemValue="Male" itemLabel="Male"></apex:selectOption>
+                    <apex:selectOption itemValue="Female" itemLabel="Female"></apex:selectOption>
+                </apex:selectList>                
+                <apex:inputField label="Branch" value="{!Student__c.Branch__c}"/> 
+                <apex:inputField label="Phone" value="{!Student__c.Mobile_no__c}" />
+                <apex:inputField label="Email" value="{!Student__c.Email__c}"/>
+                <apex:inputfield value="{!Student__c.Blood_Group__c}" label="blood" />
+                <apex:inputfield label="Fee Reimbursement" value="{!Student__c.Fee_Reimbursement__c}"/>
+                <apex:inputField label="Eamcet Rank" value="{!Student__c.Eamcet_Rank__c}"/>
+                <apex:inputfield label="DOB" value="{!Student__c.DOB__c}"/>
+                <apex:inputField label="Course Type" value="{!Student__c.Course_Type__c}"/>
+                <apex:selectList label="Admission Type" multiselect="false" size="1" value="{!Student__c.Admission_Type__c}">
+                    <apex:selectOption itemValue="Counselling" itemLabel="Counselling"></apex:selectOption>
+                    <apex:selectOption itemValue="Management" itemLabel="Management"></apex:selectOption>
+                    <apex:selectOption itemValue="Spot Admission" itemLabel="Spot Admission"></apex:selectOption>
+                </apex:selectList>
+                <apex:inputTextarea label="Address" value="{!Student__c.Address__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Family Information" collapsible="false">
+                <apex:inputField label="Father's Name" value="{!Student__c.Father_s_Name__c}"/> 
+                <apex:inputField label="Mother's Name" value="{!Student__c.Mother_s_Name__c}"/> 
+                <apex:inputField label="Father's mobile no." value="{!Student__c.Father_s_Phone_no__c}" />              
+                <apex:inputField label="Mother's mobile no." value="{!Student__c.Mother_s_phone_no__c}" />
+                <apex:inputField label="Father's Occupation" value="{!Student__c.Father_s_occupation__c}"/>
+                <apex:inputField label="Mother's Occupation" value="{!Student__c.Mother_s_occupation__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Academic Information" collapsible="false">
+                <apex:inputField label="School Name" value="{!Student__c.School_Name__c}" />
+                <apex:inputField label="Intermediate College Name" value="{!Student__c.Intermediate_College_Name__c}" />
+                <apex:inputField label="School Percentage" value="{!Student__c.School_Percentage__c}" />
+                <apex:inputField label="Intermediate Percentage" value="{!Student__c.Intermediate_Percentage__c}" />
+                <apex:inputField label="Year of completion" value="{!Student__c.Year_of_School_Completion__c}" />
+                <apex:inputField label="Year of completion" value="{!Student__c.Year_of_College_Completion__c}" />
+                <apex:inputField label="School Name" value="{!Student__c.School_Name__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Extracurricular Activities" collapsible="false">
+                <apex:inputField label="Interested Games" value="{!Student__c.Intrested_Games__c}"/>
+                <apex:inputField label="Available Games" value="{!Student__c.Available_Games__c}"/>
+                <apex:inputField label="Interested Clubs" value="{!Student__c.Interested_Club__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" styleClass="slds-button slds-button_success" action="{!saveme}"/> &nbsp; &nbsp;
+                <apex:commandButton value="Cancel" action="{!cancel}"  />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title="{!sname}'s Details" rendered="{!flag3}" id="pageblock4">
+            <apex:repeat value="{!studentdetail}" var="r">
+                <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                    <apex:outputText label="Full Name" value="{!r.Name}"  />
+                    <apex:outputText label="Gender" value="{!r.Gender__c}"  />	           
+                    <apex:outputText label="Branch" value="{!r.Branch__r.name}"/> 
+                    <apex:outputText label="Phone" value="{!r.Mobile_no__c}" />
+                    <apex:outputText label="Email" value="{!r.Email__c}"/>
+                    <apex:outputText value="{!r.Blood_Group__c}" label="blood" />
+                    <apex:outputText label="Fee Reimbursement" value="{!r.Fee_Reimbursement__c}"/>
+                    <apex:outputText label="Eamcet Rank" value="{!r.Eamcet_Rank__c}"/>
+                    <apex:outputText label="DOB" value="{!r.DOB__c}"/>
+                    <apex:outputText label="Course Type" value="{!r.Course_Type__c}"/>
+                    <apex:outputText label="Admission Type" value="{!r.Admission_Type__c}"/>
+                    <apex:outputText label="Address" value="{!r.Address__c}" />
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Family Information" collapsible="false">
+                    <apex:outputText label="Father's Name" value="{!r.Father_s_Name__c}"/> 
+                    <apex:outputText label="Mother's Name" value="{!r.Mother_s_Name__c}"/> 
+                    <apex:outputText label="Father's mobile no." value="{!r.Father_s_Phone_no__c}" />              
+                    <apex:outputText label="Mother's mobile no." value="{!r.Mother_s_phone_no__c}" />
+                    <apex:outputText label="Father's Occupation" value="{!r.Father_s_occupation__c}"/>
+                    <apex:outputText label="Mother's Occupation" value="{!r.Mother_s_occupation__c}"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Academic Information" collapsible="false">
+                    <apex:outputText label="School Name" value="{!r.School_Name__c}" />
+                    <apex:outputText label="Intermediate College Name" value="{!r.Intermediate_College_Name__c}" />
+                    <apex:outputText label="School Percentage" value="{!r.School_Percentage__c}" />
+                    <apex:outputText label="Intermediate Percentage" value="{!r.Intermediate_Percentage__c}" />
+                    <apex:outputText label="Year of completion" value="{!r.Year_of_School_Completion__c}" />
+                    <apex:outputText label="Year of completion" value="{!r.Year_of_College_Completion__c}" />
+                    <apex:outputText label="School Name" value="{!r.School_Name__c}" />
+                </apex:pageBlockSection>
+                <apex:pageBlockSection title="Extracurricular Activities" collapsible="false">
+                    <apex:outputText label="Interested Games" value="{!r.Intrested_Games__c}"/>
+                    <apex:outputText label="Available Games" value="{!r.Available_Games__c}"/>
+                    <apex:outputText label="Interested Clubs" value="{!r.Interested_Club__c}"/>
+                </apex:pageBlockSection>
+            </apex:repeat>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Clear" styleClass="slds-button slds-button_brand" action="{!clearresult}"/>
+            </apex:pageBlockButtons>               
+        </apex:pageBlock>    
+                </div>
+    </apex:form>
+</apex:page>

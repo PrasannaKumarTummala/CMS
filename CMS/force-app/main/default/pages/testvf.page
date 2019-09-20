@@ -1,0 +1,56 @@
+<apex:page showHeader="false" sidebar="false" title="test homepage">
+    <style>
+        body {
+        background-image: url("{!$Resource.BG}");
+        background-height:100%;
+        background-size:cover;
+        opacity:0.9;
+        background-attachment:fixed;
+        float:left;
+        }
+    </style>
+    <apex:pageBlock >  
+        <div style="height:200px;">
+            
+            <apex:pageBlockSection columns="3">
+                <apex:pageBlockSectionItem >
+                    <div style="font-size:18px; font-family:times new roman; text-align:justify"> <b>  
+                        VISION:  </b> 
+                    <br/>
+                    To be a World Class University providing value-based education,
+                    conducting interdisciplinary research in cutting edge technologies 
+                    leading to sustainable socio-economic development of the nation.
+                        </div>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <div style="font-size:18px; font-family:times new roman; text-align:justify"> <b> 
+                    <h1>
+                        MISSION:
+                        </h1> </b><br/>
+                    To produce technically competent and socially responsible engineers,
+                    managers and entrepreneurs, who will be future ready<br/> 
+                    To involve students and faculty in innovative research projects linked with industry,
+                    academic and research institutions in India and abroad<br/>
+                    To use modern pedagogy for improving the teaching-learning process
+                        </div>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <div style="font-size:18px; font-family:times new roman; text-align:justify"> <b> 
+                    <h1>
+                        QUALITY POLICY:
+                        </h1> </b><br/>            
+                    Impart up-to-date knowledge in the students' chosen fields to make them quality engineers
+                    <br/>
+                    Make the students experience the applications on quality equipment and tools
+                    <br/>
+                    Provide quality environment and services to all stakeholders
+                    <br/>
+                    Maintain global standards in education, training and services  
+                        </div>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            
+        </div>
+        
+    </apex:pageBlock>
+</apex:page>

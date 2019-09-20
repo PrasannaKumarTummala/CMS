@@ -1,0 +1,34 @@
+<apex:page title="Notice" controller="NoticeController" showHeader="false" sidebar="false" >
+    <style>
+        body {
+        background-image: url("{!$Resource.Notices}");
+        background-height:100%;
+        background-size:cover;
+        opacity:0.9;
+        background-attachment: fixed;
+        }
+    </style>
+    <apex:form >
+        <apex:pageBlock title="List of Notices" rendered="{!flag}">
+            <apex:pageBlockTable value="{!records}" var="t">                  
+                <apex:column value="{!t.name}"/>
+                <apex:column value="{!t.Referring__c}"/>
+                <apex:column >
+                    <apex:commandlink value="View details" action="{!Queryinfo}" >
+                        <apex:param name="noticeId" value="{!t.id}" assignTo="{!noticeid}"/> 
+                    </apex:commandlink>
+                </apex:column>
+            </apex:pageBlockTable> 
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton value="Add New Notice" action="{!createnotice}" />              
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock title=" Notice Information" rendered="{!flag1}" >    
+            <apex:pageBlockTable value="{!recorddetail}" var="r">
+                <apex:column value="{!r.name}"/>
+                <apex:column value="{!r.Referring__c}" />
+                <apex:column value="{!r.Description__c}"/>
+            </apex:pageBlockTable>           
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

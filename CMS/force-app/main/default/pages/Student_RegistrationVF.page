@@ -1,0 +1,53 @@
+<apex:page standardController="Student__c" docType="Html-5.0" recordSetVar="temp" showHeader="false" sidebar="false" title="Student Registration Form">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                <apex:inputField label="Full Name" value="{!Student__c.Name}" required="true" />
+                <apex:selectList label="Gender" multiselect="false" size="1" value="{!Student__c.Gender__c}">
+                    <apex:selectOption itemValue="Male" itemLabel="Male"></apex:selectOption>
+                    <apex:selectOption itemValue="Female" itemLabel="Female"></apex:selectOption>
+                </apex:selectList>
+                
+                <apex:inputField required="true" label="Branch" value="{!Student__c.Branch__c}"/> 
+                <apex:inputField required="true" label="Phone" value="{!Student__c.Mobile_no__c}" />
+                <apex:inputField required="true" label="Email" value="{!Student__c.Email__c}"/>
+                <apex:inputfield value="{!Student__c.Blood_Group__c}" label="blood" />
+                <apex:inputfield label="Fee Reimbursement" value="{!Student__c.Fee_Reimbursement__c}"/>
+                <apex:inputField label="Eamcet Rank" value="{!Student__c.Eamcet_Rank__c}"/>
+                <apex:inputfield label="DOB" value="{!Student__c.DOB__c}"/>
+                <apex:inputField label="Course Type" value="{!Student__c.Course_Type__c}"/>
+                <apex:selectList label="Admission Type" multiselect="false" size="1" value="{!Student__c.Admission_Type__c}">
+                    <apex:selectOption itemValue="Counselling" itemLabel="Counselling"></apex:selectOption>
+                    <apex:selectOption itemValue="Management" itemLabel="Management"></apex:selectOption>
+                    <apex:selectOption itemValue="Spot Admission" itemLabel="Spot Admission"></apex:selectOption>
+                </apex:selectList>
+                <apex:inputTextarea label="Address" value="{!Student__c.Address__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Family Information">
+                <apex:inputField required="true" label="Father's Name" value="{!Student__c.Father_s_Name__c}"/> 
+                <apex:inputField label="Mother's Name" value="{!Student__c.Mother_s_Name__c}"/> 
+                <apex:inputField required="true" label="Father's mobile no." value="{!Student__c.Father_s_Phone_no__c}" />              
+                <apex:inputField label="Mother's mobile no." value="{!Student__c.Mother_s_phone_no__c}" />
+                <apex:inputField label="Father's Occupation" value="{!Student__c.Father_s_occupation__c}"/>
+                <apex:inputField label="Mother's Occupation" value="{!Student__c.Mother_s_occupation__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Academic Information">
+                <apex:inputField label="School Name" value="{!Student__c.School_Name__c}" />
+                <apex:inputField label="Intermediate College Name" value="{!Student__c.Intermediate_College_Name__c}" />
+                <apex:inputField label="School Percentage" value="{!Student__c.School_Percentage__c}" required="true"/>
+                <apex:inputField label="Intermediate Percentage" value="{!Student__c.Intermediate_Percentage__c}" required="true"/>
+                <apex:inputField label="Year of completion" value="{!Student__c.Year_of_School_Completion__c}" />
+                <apex:inputField label="Year of completion" value="{!Student__c.Year_of_College_Completion__c}" />
+                <apex:inputField label="School Name" value="{!Student__c.School_Name__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Extracurricular Activities">
+                <apex:inputField label="Interested Games" value="{!Student__c.Intrested_Games__c}"/>
+                <apex:inputField label="Available Games" value="{!Student__c.Available_Games__c}"/>
+                <apex:inputField label="Interested Clubs" value="{!Student__c.Interested_Club__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Save" action="{!save}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

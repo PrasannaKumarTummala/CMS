@@ -1,0 +1,25 @@
+<apex:page standardController="Staff__c"  sidebar="false" showHeader="false" docType="html-5.0" title="Staff Registration" > 
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                <apex:inputField label="Full Name" value="{!Staff__c.Name}" required="true" />
+                <apex:selectList label="Gender" multiselect="false" size="1" value="{!Staff__c.Gender__c}">
+                    <apex:selectOption itemValue="Male" itemLabel="Male"></apex:selectOption>
+                    <apex:selectOption itemValue="Female" itemLabel="Female"></apex:selectOption>
+                </apex:selectList>
+                <apex:inputField label="DOB" value="{!Staff__c.DOB__c}" />
+                <apex:inputField label="Date of Joining" value="{!Staff__c.Date_of_Joining__c}" />
+                <apex:inputfield label="Contact no." value="{!Staff__c.Contact_no__c}"/>
+                
+                <apex:inputfield label="Salary" value="{!Staff__c.Salary__c}"/>
+                <apex:inputField label="Department" value="{!Staff__c.Department__c}" />
+                <apex:inputField label="Role" value="{!Staff__c.Role__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Other Details" collapsible="false">
+                <apex:inputTextarea label="Father's Name" value="{!Staff__c.Father_s_Name__c}" />
+                <apex:inputTextarea label="Pancard No." value="{!Staff__c.Pan_card_number__c}" />
+                <apex:inputTextarea label="Aadhar no." value="{!Staff__c.Aadhar_Number__c}" />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

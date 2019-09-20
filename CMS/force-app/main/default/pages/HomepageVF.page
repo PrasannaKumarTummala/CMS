@@ -1,0 +1,458 @@
+<apex:page title="College Management System" sidebar="false" showHeader="false" controller="MainController">
+    <apex:form >
+        <apex:slds />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <script>
+        function openTab(tabName) {
+            var i, x;
+            x = document.getElementsByClassName("containerTab");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(tabName).style.display = "block";
+        }
+        function stucall()
+        {
+            callstudent();
+        }
+        function stacall()
+        {
+            callstaff();
+        }
+        function notcall()
+        {
+            callnotices();
+        }
+        function inqcall()
+        {
+            callinquiry();
+        }
+        function homecall()
+        {
+            callhome();
+        }   
+</script>
+        <style>
+            #leftbox { 
+            float:left;  
+            width:33.3%; 
+            height:280px;
+            } 
+            #middlebox{ 
+            float:left;
+            width:33.3%; 
+            height:280px; 
+            } 
+            #rightbox{ 
+            float:right; 
+            width:33.3%; 
+            height:280px; 
+            } 
+            body {
+            background-image: url("{!$Resource.StudentBG}");
+            background-height:100%;
+            background-size:cover;
+            opacity:0.9;
+            background-attachment: fixed;
+            }        
+            /* The grid: Three equal columns that floats next to each other */
+            .column {
+            float: left;
+            width: 20%;
+            height:50px;
+            padding:20px;
+            padding-bottom:50px;
+            text-align:center;
+            font-size:20px;
+            cursor: pointer;
+            color: white;
+            border-style:solid;
+            }        
+            .containerTab {
+            padding: 20px;
+            color: white;
+            }        
+            /* Clear floats after the columns */
+            .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }              
+            .title{            
+            position:absolute;            
+            padding-left:150px;
+            padding-top:15px;
+            padding-bottom:15px;
+            color:red;
+            text-align: center;      
+            font-family: Arial;
+            font-size:60px;
+            }
+            .header {
+            background-color: #f1f1f1;
+            text-align:left;
+            border-style: solid;
+            }
+            .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height:120px;
+            background-color:#ac3939;
+            color: white;
+            text-align:left;
+            }
+            .classa {
+            width: 200px;
+            height: 93px;
+            padding-bottom:15px;
+            background-color: grey;
+            font-color:white;
+            transition-property: width;
+            transition-duration: 2s;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            border-left: 6px solid #000000;	
+            border-bottom: 3px solid #000000;            
+            
+            }
+            .classb {
+            width: 150px;
+            height: 25px;
+            background-color:#00ccff;
+            font-color:white;
+            transition-property: width;
+            transition-duration: 2s;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            }
+            .classc {
+            width: 150px;
+            height: 25px;
+            background-color:#00ccff;
+            font-color:white;
+            transition-property: width;
+            transition-duration: 2s;
+            overflow: hidden;
+            text-overflow:ellipsis;	
+            }
+            .classa:hover {
+            width:150%;
+            height:93px;
+            overflow: hidden;
+            }
+            .classb:hover {
+            width:100%;
+            height:90px;
+            overflow: hidden;
+            }
+            .classc:hover {
+            width:100%;
+            height:90px;
+            overflow: hidden;
+            }            
+            .footer {
+            width: 100%;
+            position: relative;
+            height: auto;
+            background-color: #070617;
+            }
+            .footer .col {
+            width: 30%;
+            height: auto;
+            float: left;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            padding: 0px 20px 20px 20px;
+            }
+            .footer .col p {
+            color: #999999;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: bold;
+            padding: 5px 0px 5px 0px;
+            cursor: pointer;
+            transition: .2s;
+            -webkit-transition: .2s;
+            -moz-transition: .2s;
+            }
+            .footer .col h1 {
+            margin: 0;
+            padding: 0;
+            font-family: inherit;
+            font-size: 12px;
+            line-height: 17px;
+            padding: 20px 0px 5px 0px;
+            color: rgba(255,255,255,0.2);
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 0.250em;
+            }
+            .footer .col ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            }
+            .footer .col ul li {
+            color: #999999;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: bold;
+            padding: 5px 0px 5px 0px;
+            cursor: pointer;
+            transition: .2s;
+            -webkit-transition: .2s;
+            -moz-transition: .2s;
+            }
+            .social ul li {
+            display: inline-block;
+            padding-right: 5px !important;
+            }
+            
+            .footer .col ul li:hover {
+            color: #ffffff;
+            transition: .1s;
+            -webkit-transition: .1s;
+            -moz-transition: .1s;
+            }
+            .clearfix {
+            clear: both;
+            }
+            @media only screen and (min-width: 1280px) {
+            .contain {
+            width: 1200px;
+            margin: 0 auto;
+            }
+            }
+            @media only screen and (max-width: 1139px) {
+            .contain .social {
+            width: 1000px;
+            display: block;
+            }
+            .social h1 {
+            margin: 0px;
+            }
+            }
+            @media only screen and (max-width: 950px) {
+            .footer .col {
+            width: 33%;
+            }
+            .footer .col h1 {
+            font-size: 14px;
+            }
+            .footer .col ul li {
+            font-size: 13px;
+            }
+            }
+            @media only screen and (max-width: 500px) {
+            .footer .col {
+            width: 50%;
+            }
+            .footer .col h1 {
+            font-size: 14px;
+            }
+            .footer .col ul li {
+            font-size: 13px;
+            }
+            }
+            @media only screen and (max-width: 340px) {
+            .footer .col {
+            width: 100%;
+            }
+            }
+            .columna {
+            float: left;
+            width: 33.33%;
+            padding: 10px;
+            height: 300px;
+            border-style:solid;/* Should be removed. Only for demonstration */
+            }
+            
+            /* Clear floats after the columns */
+            .rowa:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+            .btn-group button {
+            background-color: green; /* Green background */
+            border: 1px solid white; /* Green border */
+            color: white; /* White text */
+            padding: 10px 24px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            width: 50%; /* Set a width if needed */
+            display: block; /* Make the buttons appear below each other */
+            }
+            .btn-group button:not(:last-child) {
+            border-bottom: none; /* Prevent double borders */
+            }
+            
+            /* Add a background color on hover */
+            .btn-group button:hover {
+            background-color: brown;
+            }
+            .block {
+            display: block;
+            width: 100%;
+            border-style: inset;
+            background-color: brown;
+            padding: 10px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            }
+            p{
+            font-size:12px;
+            }
+            
+        </style>
+        <apex:actionFunction name="callstudent" action="{!student}" />
+        <apex:actionFunction name="callstaff" action="{!staff}" />
+        <apex:actionFunction name="callnotices" action="{!notice}" />
+        <apex:actionFunction name="callinquiry" action="{!inquiry}" />
+        <apex:actionFunction name="callhome" action="{!home}" />
+        <header>
+            <div class="header">            
+                <a href="/apex/homepageVF"><apex:image id="theImage" value="{!$Resource.CMS}" width="11%" height="15%"/> </a> 
+                <span class="title">
+                    <h1 style="text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;">              
+                        COLLEGE MANAGEMENT SYSTEM
+                    </h1></span>
+            </div>     
+            <!-- Three columns -->
+            <div class="row" >
+                
+                <div class="column" title="HOME" onclick="homecall();" style="background:#5E524F;">
+                    HOME
+                </div>
+                <div class="column " title="Student" onclick="stucall();" style="background:#5E524F;">
+                    STUDENT
+                </div>
+                <div class="column" title="Staff" onclick="stacall();" style="background:#5E524F;">
+                    STAFF
+                </div>
+                <div class="column" title="Notices" onclick="notcall();" style="background:#5E524F;">
+                    NOTICES
+                </div>
+                <div class="column" title="Student Inquiries" onclick="inqcall();" style="background:#5E524F;">
+                    STUDENT INQUIRIES
+                </div>
+            </div>
+        </header>
+        <body>
+            <apex:pageBlock rendered="{!flag}">
+                <div class="rowa">
+                    <div class="columna" style="background-color:#ccc;">
+                        <h2><img src="https://www.animatedgif.net/new/new10_e0.gif"/><strong>VISION:</strong></h2>
+                        <p>To be a World Class University providing value-based education,
+                            conducting interdisciplinary research in cutting edge technologies 
+                            leading to sustainable socio-economic development of the nation.</p>
+                        <hr/>
+                        <h2> <img src="https://www.animatedgif.net/new/new10_e0.gif"/><strong>MISSION:</strong></h2> 
+                        <p> To produce technically competent and socially responsible engineers,
+                            managers and entrepreneurs, who will be future ready..</p> 
+                        <p>To involve students and faculty in innovative research projects linked with industry,
+                            academic and research institutions in India and abroad.</p>
+                        <p>To use modern pedagogy for improving the teaching-learning process.</p>
+                        <hr/>
+                        <h2><strong>QUALITY POLICY:</strong></h2>
+                        <p>Impart up-to-date knowledge in the students' chosen fields to make them quality engineers</p>
+                        <p>Make the students experience the applications on quality equipment and tools</p>
+                        <p>Provide quality environment and services to all stakeholders</p>                        
+                    </div>
+                    <div class="columna" style="background-color:#aaa;">
+                        <marquee direction ="up" onmouseover="this.stop();" onmouseout="this.start();">
+                            <h2>
+                                <strong>VISION:</strong>
+                            </h2>
+                            <p> <i class="fa fa-hand-o-right"></i>To be a World Class University providing value-based education,
+                                conducting interdisciplinary research in cutting edge technologies 
+                                leading to sustainable socio-economic development of the nation.</p>
+                            <h2><strong>MISSION:</strong></h2>
+                            <p> <i class="fa fa-hand-o-right"></i>To produce technically competent and socially responsible engineers,
+                                managers and entrepreneurs, who will be future ready..</p> 
+                            <p><i class="fa fa-hand-o-right"></i>To involve students and faculty in innovative research projects linked with industry,
+                                academic and research institutions in India and abroad.</p>
+                            <p><i class="fa fa-hand-o-right"></i>To use modern pedagogy for improving the teaching-learning process.</p>
+                            <h2><strong>QUALITY POLICY:</strong></h2>
+                            <p> <i class="fa fa-hand-o-right"></i>Impart up-to-date knowledge in the students' chosen fields to make them quality engineers</p>
+                            <p><i class="fa fa-hand-o-right"></i>Make the students experience the applications on quality equipment and tools</p>
+                            <p><i class="fa fa-hand-o-right"></i>Provide quality environment and services to all stakeholders</p>                        
+                        </marquee>
+                    </div>
+                    <div class="columna" style="background-color:#ccc;">                        
+                        <button type="button" class="block" > <img src="https://www.animatedgif.net/new/new6__e0.gif"/> Objectives </button> <br/>
+                        <button type="button" class="block">Strategies</button><br/>
+                        <button type="button" class="block">Functions</button><br/>
+                        <button type="button" class="block">Benefits</button><br/>  
+                        <button type="button" class="block">Activities</button><br/> 
+                    </div>
+                </div>
+            </apex:pageBlock>            
+        </body>     
+    </apex:form>
+    <apex:pageBlock rendered="{!flag1}">
+        <apex:include pageName="StudentVF"/>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!flag2}">
+        <apex:include pageName="StaffVF"/>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!flag3}">
+        <apex:include pageName="NoticesVF"/>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!flag4}">
+        <apex:include pageName="InquiryVF"/>
+    </apex:pageBlock>
+    <footer>
+        <!-- FOOTER START -->
+        <div class="footer">
+            <div class="contain">
+                <div class="col" style="font-color:red">
+                    <h1>Contact us</h1> 
+                    <a href="https://www.google.com/maps/place/Aristontek+Inc/@17.4390689,78.3842479,20.54z/data=!4m5!3m4!1s0x3bcb915c84906b89:0x865c0fe1a7abf85e!8m2!3d17.4391128!4d78.3843935" target="_blank">
+                        <p>
+                            RESPONSE INFORMATICS LTD. <br/>
+                            CIN:L72200TG1996PLC025871 <br/>
+                            Spaces and More Business Park Madhapur#3<br/>
+                            E1, 5th Floor, 1-89/A/8/c/2<br/>
+                            Vittal Rao Nagar, Madhapur<br/>
+                            Hyderabad – 500 081<br/>
+                            Phone: 040-40037073<br/>
+                        </p>
+                    </a>
+                </div>
+                <div class="col">
+                    <h1>College Branches</h1>
+                    <ul>
+                        <li>Telangana <a href="https://www.facebook.com/prasanna6504"/>
+                        </li>
+                        <li>Kerala</li>
+                        <li>Tamilnadu</li>
+                        <li>Delhi</li>
+                        <li>Mumbai</li>
+                    </ul>
+                </div>                
+                <div class="col social">
+                    <h1>Social</h1>
+                    <ul>
+                        <li> 
+                            <i class="fa fa-facebook-square"></i>
+                            <a href="https://www.facebook.com/prasanna6504" target="_blank"> Facebook</a></li><br/>
+                        <li><i class="fa fa-linkedin-square"></i>
+                            <a href="https://www.linkedin.com/in/prasanna-kumar-tummala-017588129" target="_blank"> Linkedin</a></li> <br/>
+                        <li><i class="fa fa-instagram"></i>
+                            <a href="https://www.instagram.com/prasanna.kumar_97" target="_blank"> Instagram</a></li> <br/>
+                        <li><i class="fa fa-twitter"></i>
+                            <a href="https://www.twitter.com/ImPrasanna6504" target="_blank"> Twitter</a></li>                        
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </footer>    
+</apex:page>

@@ -1,0 +1,62 @@
+<apex:page controller="InquiryController" sidebar="false" showHeader="false" title="Student Inquiries">
+    <style>
+        body {
+        background-image: url("{!$Resource.inquiry}");
+        background-height:100%;
+        background-size:cover;
+        opacity:0.9;
+        }
+    </style>
+    <apex:form >
+        <apex:pageMessages ></apex:pageMessages>
+        <apex:pageBlock title="List of Inquiries">
+            <apex:pageBlockTable value="{!record}" var="t">
+                <apex:column value="{!t.name}"/>
+                <apex:column value="{!t.Email__c}"/>
+                <apex:column value="{!t.Answered__c}"/>
+                <apex:column headerValue="Actions" width="20%" >
+                    <apex:commandLink value="Reply" action="{!reply}"  >
+                        <apex:param value="{!t.Email__c}" assignTo="{!inquirymail}" name="inquirymail"/>
+                        <apex:param value="{!t.Answered__c}" assignTo="{!ans}" name="answered"/>
+                    </apex:commandLink>&nbsp; &nbsp;
+                    <apex:commandLink value="View" action="{!Queryinfo}">
+                        <apex:param value="{!t.id}" assignTo="{!inquiryid}" name="inquiryid"/>
+                    </apex:commandLink>
+                </apex:column>
+            </apex:pageBlockTable> 
+            <apex:pageBlockButtons >
+                <apex:commandButton value="New Inquiry" action="{!newinquiry}" />    
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+        <apex:pageBlock rendered="{!flag}" title="Query Response">
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel > Email Address:</apex:outputLabel>  
+                    <apex:outputText value="{!inquirymail}"/>
+                </apex:pageBlockSectionItem> <br/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Enter Mail Subject</apex:outputLabel>
+                    <apex:inputText value="{!subject}" />
+                </apex:pageBlockSectionItem> <br/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Enter body</apex:outputLabel>
+                    <apex:inputTextarea value="{!body}"/>
+                </apex:pageBlockSectionItem><br/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Send Email" action="{!SendEmailresponse}"  />
+            </apex:pageBlockButtons> 
+        </apex:pageBlock> 
+        
+        <!-- This is for Query Information pageblock -->               
+        <apex:pageBlock title=" Query Information" rendered="{!flag2}">    
+            <apex:pageBlockTable value="{!recorddetail}" var="r">
+                <apex:column value="{!r.Answered__c}"/>
+                <apex:column value="{!r.name}" />
+                <apex:column value="{!r.Contact_No__c}"  width="15%" />
+                <apex:column value="{!r.Student_Name__c}"   width="20%" />
+                <apex:column value="{!r.Query__c}" />
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
