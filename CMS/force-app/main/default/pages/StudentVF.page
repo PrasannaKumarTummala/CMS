@@ -185,11 +185,11 @@
                 <apex:commandButton value="Cancel" action="{!cancel}"  />
             </apex:pageBlockButtons>
         </apex:pageBlock>
-        <apex:pageBlock title="{!sname}'s Details" rendered="{!flag3}" id="pageblock4">
+        <apex:pageBlock title="{!sname}'s Details" rendered="{!flag3}" id="pageblock4" >
             <apex:repeat value="{!studentdetail}" var="r">
-                <apex:pageBlockSection title="Personal Information" collapsible="false" >
+                <apex:pageBlockSection title="Personal Information" collapsible="false"  >
                     <apex:outputText label="Full Name" value="{!r.Name}"  />
-                    <apex:outputText label="Gender" value="{!r.Gender__c}"  />	           
+                    <apex:outputText label="Gender" value="{!r.Gender__c}"  />             
                     <apex:outputText label="Branch" value="{!r.Branch__r.name}"/> 
                     <apex:outputText label="Phone" value="{!r.Mobile_no__c}" />
                     <apex:outputText label="Email" value="{!r.Email__c}"/>

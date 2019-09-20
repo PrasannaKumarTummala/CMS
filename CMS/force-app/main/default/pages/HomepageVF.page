@@ -1,4 +1,4 @@
-<apex:page title="College Management System" sidebar="false" showHeader="false" controller="MainController">
+<apex:page title="College Management System" sidebar="false" showHeader="false" controller="MainController"  docType="html-5.0">
     <apex:form >
         <apex:slds />
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -116,7 +116,7 @@
             transition-duration: 2s;
             overflow: hidden;
             text-overflow:ellipsis;
-            border-left: 6px solid #000000;	
+            border-left: 6px solid #000000; 
             border-bottom: 3px solid #000000;            
             
             }
@@ -138,7 +138,7 @@
             transition-property: width;
             transition-duration: 2s;
             overflow: hidden;
-            text-overflow:ellipsis;	
+            text-overflow:ellipsis; 
             }
             .classa:hover {
             width:150%;
@@ -386,7 +386,7 @@
                         </marquee>
                     </div>
                     <div class="columna" style="background-color:#ccc;">                        
-                        <button type="button" class="block" > <img src="https://www.animatedgif.net/new/new6__e0.gif"/> Objectives </button> <br/>
+                        <button type="button" class="block" > <img src="https://www.animatedgif.net/new/new6__e0.gif"/>Objectives </button> <br/>
                         <button type="button" class="block">Strategies</button><br/>
                         <button type="button" class="block">Functions</button><br/>
                         <button type="button" class="block">Benefits</button><br/>  
